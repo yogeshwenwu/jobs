@@ -1,0 +1,66 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    
+}
+
+header,
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1em;
+    width: 100%;
+}
+
+main {
+    padding: 1em;
+    margin-bottom: 100px;
+}
+
+section {
+    margin-bottom: 1em;
+}
+
+.job-listing {
+    border: 1px solid #ddd;
+    padding: 1em;
+    margin-bottom: 1em;
+}
+
+.user-profile {
+    border: 1px solid #ddd;
+    padding: 1em;
+}
+
+footer{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    
+}
+
+.grid{
+    width: 100%;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    column-gap: 200px;
+}
+.grid a{
+color:white;
+display: inline-block;
+background-color: #333;
+padding: 5px;
+text-decoration: none;
+}
+
+.application{
+    background-color: #333;
+    width: max-content;
+    color:white;
+    padding: 30px;
+    margin-bottom: 30px;
+}

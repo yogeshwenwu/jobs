@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <header>
+        <h1>User Profile</h1>
+    </header>
+    <main>
+        <section id="user-profile">
+
+        </section>
+        
+    </main>
+    <footer>
+        <p>&copy; 2024 Job Board</p>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const applications = JSON.parse(localStorage.getItem('applications')) || [];
+
+            const userProfileContainer = document.getElementById('user-profile');
+
+
+            const applicationContainer = document.createElement('div');
+            applicationContainer.innerHTML = '<h2>Applications</h2>';
+
+            if (applications.length === 0) {
+                applicationContainer.innerHTML += '<p>No applications submitted.</p> ';
+            } else {
+                applications.forEach(application => {
+                    applicationContainer.innerHTML += `
+                <div class="application">
+                    <p>Job: ${application.jobTitle}</p>
+                    <p>Status: ${application.status}</p>
+                    <p>Name: ${application.name}</p>
+                    <p>Email: ${application.email}</p>
+                    <p>Resume: ${application.resume}</p>
+                </div>
+                <section id="delete-application-section"> <button onclick="deleteAllApplication()">Delete All
+                application</button>
+        </section>`
+            ;
+                });
+            }
+
+            userProfileContainer.appendChild(applicationContainer);
+        });
+        function deleteAllApplication() {
+
+            localStorage.removeItem('applications');
+
+
+
+            location.reload();
+
+        }
+
+
+    </script>
+</body>
+
+</html>

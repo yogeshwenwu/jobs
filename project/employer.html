@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+
+</head>
+
+<body>
+    <header>
+        <h1>Employer Dashboard</h1>
+    </header>
+    <main>
+
+        <section id="post-job-form">
+            <form id="jobForm">
+                <label for="title">Job Title:</label>
+                <input type="text" id="title" name="title" required>
+
+                <label for="company">Company:</label>
+                <input type="text" id="company" name="company" required>
+
+                <label for="location">Location:</label>
+                <input type="text" id="location" name="location" required>
+
+                <button type="button" onclick="postJob()">Post Job</button>
+            </form>
+        </section>
+        <section id="delete-jobs-section"> <button onclick="deleteAllJobs()">Delete All Jobs</button>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Job Board</p>
+    </footer>
+    <script>
+        function postJob() {
+            const title = document.getElementById('title').value;
+            const company = document.getElementById('company').value;
+            const location = document.getElementById('location').value;
+
+            const job = { title, company, location };
+
+            const existingJobs = JSON.parse(localStorage.getItem('jobs')) || [];
+
+            existingJobs.push(job);
+
+            localStorage.setItem('jobs', JSON.stringify(existingJobs));
+
+            alert(`Job posted: ${title} at ${company}, ${location}`);
+            window.location.href = "/";
+        }
+
+        function deleteAllJobs() {
+            const confirmation = confirm("Are you sure you want to delete all job listings?");
+
+            if (confirmation) {
+                localStorage.removeItem('jobs');
+
+                alert("All job listings have been deleted.");
+
+                location.reload();
+            }
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Board</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#">Disabled</a>
+            </li>
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </nav>
+    <header>
+        <h1>Job Board</h1>
+    </header>
+     <!-- Background image -->
+  <div id="intro" class="bg-image shadow-2-strong">
+    <div class="mask" style="background-color: rgba(0, 0, 0, 0.8);">
+      <div class="container d-flex align-items-center justify-content-center text-center h-100">
+        <div class="text-white" data-mdb-theme="dark">
+          <h1 class="mb-3">Find your best job</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Background image -->
+  
+    <main>
+        <section id="job-listings">
+
+        </section>
+        <section id="user-profile">
+
+        </section>
+        <div class="grid">
+            <a href="./employer.html">Post Jobs</a>
+            <a href="./user-profile.html">View application</a>
+            <a href="./demo.html">Job Application</a>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Job Board</p>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const jobs = JSON.parse(localStorage.getItem('jobs')) || [];
+
+            const jobListingsContainer = document.getElementById('job-listings');
+            if(jobs.length === 0){
+                jobListingsContainer.innerHTML += '<p>Currently No Jobs found.</p> ';
+            }else{
+                jobs.forEach(job => {
+                const jobListing = document.createElement('div');
+                jobListing.classList.add('job-listing');
+                jobListing.innerHTML = `
+            <h2>${job.title}</h2>
+            <p>Company: ${job.company}</p>
+            <p>Location: ${job.location}</p>
+            <button onclick="applyForJob('${job.title}')">Apply</button>
+        `;
+                jobListingsContainer.appendChild(jobListing);
+            });
+            }
+            
+        });
+
+
+        function applyForJob(jobTitle) {
+            // Display a form for the user to fill out
+            const applicationForm = `
+        <form id="applicationForm" onsubmit="submitApplication('${jobTitle}'); return false;">
+            <label for="name">Name:</label><br>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="resume">Resume (URL):</label>
+            <input type="url" id="resume" name="resume" required>
+
+            <button type="submit">Submit Application</button>
+        </form>
+    `;
+
+            // Replace the job listing with the application form
+            const jobListingsContainer = document.getElementById('job-listings');
+            jobListingsContainer.innerHTML = applicationForm;
+        }
+
+        function submitApplication(jobTitle) {
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const resume = document.getElementById('resume').value;
+
+            // Create an application object
+            const application = { jobTitle, name, email, resume, status: 'Pending' };
+
+            // Retrieve existing applications from local storage or initialize an empty array
+            const existingApplications = JSON.parse(localStorage.getItem('applications')) || [];
+
+            // Add the new application to the array
+            existingApplications.push(application);
+
+            // Save the updated applications array back to local storage
+            localStorage.setItem('applications', JSON.stringify(existingApplications));
+
+            // Notify the user (replace with actual UI update)
+            alert('Application submitted successfully.');
+
+            // Refresh the page (optional)
+            location.reload();
+        }
+
+    </script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
+
+</html>
+
+
